@@ -9,15 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  *
- * @author 69TytarIA
+ * @author I.Tytar
  */
 @Slf4j
 public class RectangelFinder {
 
     final Map<Integer, List<Point>> pointsX = new HashMap();
     final Map<Integer, List<Point>> pointsY = new HashMap();
-
-    final List<Rectangel> rectangels = new ArrayList();
 
     public Stream<Rectangel> find(Stream<Point> points) {
         return points

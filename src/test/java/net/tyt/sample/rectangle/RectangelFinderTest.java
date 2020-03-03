@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  *
- * @author 69TytarIA
+ * @author I.Tytar
  */
 public class RectangelFinderTest {
     

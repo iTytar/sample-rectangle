@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 /**
  *
- * @author 69TytarIA
+ * @author I.Tytar
  */
 public class Main {
 

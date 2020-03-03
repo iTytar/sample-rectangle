@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  *
- * @author 69TytarIA
+ * @author I.Tytar
  */
 @Builder
 @Getter
