@@ -1,8 +1,5 @@
-package net.tyt.sample.reactor;
+package net.tyt.sample.rectangle;
 
-import net.tyt.sample.rectangle.RectangelFinder;
-import net.tyt.sample.rectangle.Point;
-import net.tyt.sample.rectangle.Rectangel;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
