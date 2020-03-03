@@ -27,7 +27,7 @@ public class RectangelFinder {
         addPoint(p,p.getY(),pointsY);
         log.debug("pointsX = {}",pointsX);
         log.debug("pointsY = {}",pointsY);
-        return rectangels(p);
+        return rectangles(p);
     }
     
     private void addPoint(final Point p, final Integer k, final Map<Integer, List<Point>> m) {
@@ -39,16 +39,16 @@ public class RectangelFinder {
         l.add(p);
     }
 
-    private Stream<Rectangel> rectangels(final Point a) {
+    private Stream<Rectangel> rectangles(final Point a) {
         log.debug("rectangels({})...",a);
         List<Point> lx = pointsX.getOrDefault(a.getX(), new ArrayList());
         log.debug("lx = {}",lx);
         return lx.stream()
                 .filter(b -> !b.equals(a))
-                .flatMap(b -> rectangels(a,b));
+                .flatMap(b -> rectangles(a,b));
     }
 
-    private Stream<Rectangel> rectangels(final Point a, final Point b) {
+    private Stream<Rectangel> rectangles(final Point a, final Point b) {
         log.debug("rectangels({},{})...",a,b);
         List<Point> ly = pointsY.getOrDefault(a.getY(), new ArrayList());
         log.debug("ly = {}",ly);
