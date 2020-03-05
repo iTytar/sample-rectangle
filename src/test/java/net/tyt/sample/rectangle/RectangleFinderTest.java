@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author I.Tytar
  */
-public class RectangelFinderTest {
+public class RectangleFinderTest {
     
     private static final Point A = Point.builder().x(1).y(1).build();
     private static final Point B = Point.builder().x(3).y(1).build();
@@ -48,10 +48,10 @@ public class RectangelFinderTest {
     public void testFind() {
         System.out.println("testFind...");
         Stream<Point> points = Stream.of(A,B,C,D,F,E);
-        RectangelFinder instance = new RectangelFinder();
-        Rectangel expResult = Rectangel.builder().a(A).b(B).c(C).d(D).build();
-        Stream<Rectangel> result = instance.find(points);
-        List<Rectangel> l = result.collect(Collectors.toList());
+        RectangleFinder instance = new RectangleFinder();
+        Rectangle expResult = Rectangle.builder().a(A).b(B).c(C).d(D).build();
+        Stream<Rectangle> result = instance.find(points);
+        List<Rectangle> l = result.collect(Collectors.toList());
         System.out.println("found: "+l);
         assertEquals(1,l.size());
         assertEquals(expResult.normalize(),l.get(0).normalize());

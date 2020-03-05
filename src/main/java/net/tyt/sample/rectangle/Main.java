@@ -3,6 +3,7 @@ package net.tyt.sample.rectangle;
 import static java.lang.System.*;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 /**
@@ -11,25 +12,27 @@ import java.util.stream.Stream;
  */
 public class Main {
 
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) throws Exception {
         out.println("Start...");
-        final int maxx = 10;
-        final int maxy = 10;
-        final int n = 100;
-        RectangelFinder finder = new RectangelFinder();
-        finder.find(pointsStream(maxx,maxy,n))
+//        Stream<Point> ps = pointsStream(10,10,100);
+        Stream<Point> ps = Stream.generate(Main::getPoint);
+        RectangleFinder finder = new RectangleFinder();
+        finder.find(ps)
                 .forEach(out::println);
         out.println("...Done");
     }
-    
-/**
- * Generate random points stream.
- * @param maxx X dimension
- * @param maxy Y dimension
- * @param n number of points
- * @return points stream
- */    
-    private static Stream<Point> pointsStream(final int maxx, final int maxy,final int n) {
+
+    /**
+     * Generate random points stream.
+     *
+     * @param maxx X dimension
+     * @param maxy Y dimension
+     * @param n number of points
+     * @return points stream
+     */
+    private static Stream<Point> pointsStream(final int maxx, final int maxy, final int n) {
         final Stream<Integer> sx = Stream.generate(() -> new Random().nextInt(maxx))
                 .limit(n);
         final Stream<Integer> sy = Stream.generate(() -> new Random().nextInt(maxy))
@@ -40,5 +43,20 @@ public class Main {
                 .y(i.next())
                 .build());
     }
-    
+
+    /**
+     * Get point from console
+     *
+     * @return Point
+     */
+    private static Point getPoint() {
+        out.print("Enter point [x,y]>");
+        String[] sa = scanner.nextLine().split(",");
+        return Point.builder()
+                .x(Integer.parseInt(sa[0]))
+                .y(Integer.parseInt(sa[1]))
+                .build();
+
+    }
+
 }

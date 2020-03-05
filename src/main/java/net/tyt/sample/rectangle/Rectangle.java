@@ -14,7 +14,7 @@ import lombok.Getter;
 @Builder
 @Getter
 @EqualsAndHashCode
-public class Rectangel {
+public class Rectangle {
 
     private final Point a;
     private final Point b;
@@ -25,7 +25,7 @@ public class Rectangel {
         return a != null && b != null && c != null && d != null;
     }
     
-    public Rectangel normalize() {
+    public Rectangle normalize() {
         if (!isComplete()) {
             throw new IllegalStateException("rectangel in not complete");
         }
@@ -37,7 +37,7 @@ public class Rectangel {
         int xmax = Collections.max(xl);
         int ymin = Collections.min(yl);
         int ymax = Collections.max(yl);
-        return Rectangel.builder()
+        return Rectangle.builder()
                 .a(Point.builder().x(xmin).y(ymin).build())
                 .b(Point.builder().x(xmin).y(ymax).build())
                 .c(Point.builder().x(xmax).y(ymax).build())

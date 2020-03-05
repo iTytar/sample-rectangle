@@ -12,22 +12,30 @@ import lombok.extern.slf4j.Slf4j;
  * @author I.Tytar
  */
 @Slf4j
-public class RectangelFinder {
+public class RectangleFinder {
 
     final Map<Integer, List<Point>> pointsX = new HashMap();
     final Map<Integer, List<Point>> pointsY = new HashMap();
 
-    public Stream<Rectangel> find(Stream<Point> points) {
+    /**
+     * Transform stream of points to stream of rectangle
+     * @param points stream of points
+     * @return stream of rectangle
+     */
+    public Stream<Rectangle> find(Stream<Point> points) {
         return points
-                .flatMap(this::processPoint);
+                .flatMap(this::rectangles);
     }
 
-    private Stream<Rectangel> processPoint(final Point p) {
-        addPoint(p,p.getX(),pointsX);
-        addPoint(p,p.getY(),pointsY);
-        log.debug("pointsX = {}",pointsX);
-        log.debug("pointsY = {}",pointsY);
-        return rectangles(p);
+    private Stream<Rectangle> rectangles(final Point a) {
+        log.debug("rectangles({})...",a);
+        addPoint(a,a.getX(),pointsX);
+        addPoint(a,a.getY(),pointsY);
+        List<Point> lx = pointsX.getOrDefault(a.getX(), new ArrayList());
+        log.debug("points list with X={}: {}",a.getX(), lx);
+        return lx.stream()
+                .filter(b -> !b.equals(a))
+                .flatMap(b -> rectangles(a,b));
     }
     
     private void addPoint(final Point p, final Integer k, final Map<Integer, List<Point>> m) {
@@ -39,27 +47,18 @@ public class RectangelFinder {
         l.add(p);
     }
 
-    private Stream<Rectangel> rectangles(final Point a) {
-        log.debug("rectangels({})...",a);
-        List<Point> lx = pointsX.getOrDefault(a.getX(), new ArrayList());
-        log.debug("lx = {}",lx);
-        return lx.stream()
-                .filter(b -> !b.equals(a))
-                .flatMap(b -> rectangles(a,b));
-    }
-
-    private Stream<Rectangel> rectangles(final Point a, final Point b) {
+    private Stream<Rectangle> rectangles(final Point a, final Point b) {
         log.debug("rectangels({},{})...",a,b);
         List<Point> ly = pointsY.getOrDefault(a.getY(), new ArrayList());
-        log.debug("ly = {}",ly);
+        log.debug("points list with Y={}: {}",a.getY(), ly);
         return ly.stream()
-                .filter(d -> !d.equals(a)).map(d -> Rectangel.builder()
+                .filter(d -> !d.equals(a))
+                .map(d -> Rectangle.builder()
                             .a(a)
                             .b(b)
                             .d(d)
                             .c(findVertexC(d.getX(),b.getY()))
-                            .build())
-                .filter(r -> r.getC()!= null);
+                            .build()).filter(Rectangle::isComplete);
     }
     
     private Point findVertexC(final int x, final int y) {
